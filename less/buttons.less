@@ -1,0 +1,25 @@
+.btn-primary {
+  .button-variant(@btn-primary-color, @color2, darken(@color2, 15));
+}
+.btn-secondary {
+  .button-variant(@btn-primary-color, lighten(@color3, 10), @color3);
+}
+
+.btn-twitter {
+  background: #55ACEE;
+  &:hover {
+    background: lighten(#55ACEE, 5%);
+  }
+}
+.btn-facebook {
+  background: #3b5998;
+  &:hover {
+    background: lighten(#3b5998, 5%);
+  }
+}
+.btn-twitter, .btn-facebook {
+  color: white;
+  &:hover, &:focus {
+    color: white;
+  }
+}

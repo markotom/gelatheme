@@ -1,0 +1,113 @@
+.navbar-ribbon {
+  width: 60%;
+  min-width: 60%;
+  margin: 0 auto 40px auto;
+  background: @color1;
+  border-radius: 0;
+  border: 0;
+  font-family: @font-family-retro;
+  ul {
+    li {
+      a {
+        padding-top: 18px;
+        padding-bottom: 17px;
+        color: #fff;
+        font-size: 1.3em;
+        .transition(all .1s ease-out);
+        &:hover, &:focus {
+          background: darken(@color1, 10);
+          .transition(all .2s ease-in);
+        }
+      }
+      &.active {
+        a {
+          background: darken(@color1, 10);
+        }
+      }
+    }
+  }
+}
+.l-triangule-top,
+.l-triangule-bottom,
+.r-triangule-top,
+.r-triangule-bottom {
+  border-style: solid;
+  border-width: 30px;
+  height: 0px;
+  width: 0px;
+  float: left;
+  position: relative;
+}
+.l-triangule-top {
+  border-color: @color1 transparent transparent;
+  margin-left: -30px;
+}
+.l-triangule-bottom {
+  border-color: transparent transparent @color1;
+  margin-left: -60px;
+  bottom: 0;
+}
+.r-triangule-top,
+.r-triangule-bottom {
+  float: right;
+}
+.r-triangule-top {
+  border-color: transparent transparent @color1;
+  margin-right: -30px;
+}
+.r-triangule-bottom {
+  border-color: @color1 transparent transparent;
+  margin-right: -60px;
+}
+
+// navs 
+.navbar-ribbon .nav {
+  > li {
+    display: table-cell;
+    width: 1%;
+    float: none;
+     > a {
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: @screen-desktop) {
+  .navbar-ribbon {
+    width: 70%;
+    min-width: 70%;
+    ul li a {
+      font-size: 1.2em;
+    }
+  }
+}
+
+@media (max-width: @screen-tablet) {
+  .navbar-ribbon {
+    width: 85%;
+    min-width: 85%;
+    ul li a {
+      font-size: 1.15em;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}
+
+@media (max-width: @screen-phone) {
+  .navbar-ribbon {
+    width: 100%;
+    min-width: 100%;
+    ul li a {
+      font-size: 1em;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  .l-triangule-top,
+  .l-triangule-bottom,
+  .r-triangule-top,
+  .r-triangule-bottom {
+    .hide();
+  }
+}

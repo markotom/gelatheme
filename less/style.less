@@ -1,0 +1,134 @@
+@import "../components/bootstrap/less/bootstrap.less";
+
+@color1: #61D2D6;
+@color2: #EA3556;
+@color3: #254C4B;
+@color4: #B63556;
+@font-family-retro: 'Arvo', @font-family-base;
+
+// type 
+hr {
+  border-color: @color3;
+  .opacity(0.3);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: @font-family-retro;
+}
+
+// general
+html, body {
+  height: 100%;
+}
+
+body {
+  background: lighten(@color1, 10) url(../img/grain.png);
+  color: @color3;
+}
+a {
+  color: darken(@color1, 30);
+  &:hover, &:focus {
+    color: @color3;
+  }
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -40px;
+  padding: 0 0 40px 0;
+
+  .brightness {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    background: url(../img/brightness.png) no-repeat center -200px;
+    background-size: cover;
+  }
+
+}
+
+#footer {
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: @color3;
+  color: white;
+  a {
+    color: @color1;
+  }
+}
+
+#logo {
+  margin: 0;
+  padding: 40px;
+  text-align: center;
+  img {
+    min-width: 200px;
+    max-width: 307px;
+    width: 30%;
+  }
+}
+
+// Navbar Override
+@import "navbar.less";
+
+// Navs Override
+@import "navs.less";
+
+// Buttons Override
+@import "buttons.less";
+
+// carousel
+.carousel {
+  margin-bottom: 80px;
+  .carousel-indicators {
+    bottom: -50px;
+    li {
+      .opacity(0.3);
+      border: 0;
+      background-color: @color3;
+      &.active {
+        .opacity(1);
+      }
+    }
+  }
+  .carousel-inner {
+    .item {
+      padding: 0 15%;
+      text-align: center;
+      h2 {
+        font-size: 2.75em;
+      }
+    }
+  }
+  .carousel-control {
+    &.left, &.right {
+      background: none;
+    }
+  }
+}
+
+// panels
+#panels {
+  padding: 20px 0 40px 0;
+  .box-shadow(0 0 5px lighten(@color3, 10));
+  background: @color1;
+}
+
+#tweet {
+  margin: 40px 20px 0 20px;
+  .bird {
+    a {
+      margin: 5px 20px 30px 20px;
+      display: block;
+      height: 53px;
+      width: 66px;
+      background: url('../img/sprite.png') no-repeat -60px 0;
+      .hide-text();
+    }
+  }
+}

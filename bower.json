@@ -1,0 +1,13 @@
+{
+  "name": "gelatheme",
+  "version": "1.0.0",
+  "homepage": "http://www.gelatinisima.com",
+  "authors": [
+    "Marco Godínez <markotom@gmail.com>"
+  ],
+  "description": "Wordpress Jelly Theme",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.0.3"
+  }
+}
