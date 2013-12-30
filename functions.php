@@ -9,6 +9,9 @@
   // Sidebars
   require get_template_directory() . '/inc/sidebars.php';
 
+  // Jelly Post Type
+  require get_template_directory() . '/inc/jelly_post_type.php';
+
 
   // Web development purposes
   if ( $_SERVER["SERVER_ADDR"] == '127.0.0.1' ) {
