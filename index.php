@@ -37,7 +37,7 @@
     <?php
       for ( $i = 0 ; $i < $wp_query->post_count ; $i++ ) {
         $classes = $i == 0 ? 'active' : '';
-        print '<li data-target="#carousel" data-slide-to="' . $i . '" class="' . $classes . '"></li>';
+        print '<li data-target="#carousel" data-slide-to="' . $i . '" class="' . $classes . '"></li> ';
       }
     ?>
   </ol>

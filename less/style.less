@@ -46,9 +46,19 @@ a {
     height: auto !important;
     height: 100%;
     background: url(../img/brightness.png) no-repeat center -200px;
-    background-size: cover;
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+            background-size: cover;
   }
 
+}
+
+@media (max-width: @screen-desktop) {
+  #wrap {
+    .brightness {
+      background-position: center -50px;
+    }
+  }
 }
 
 #footer {
