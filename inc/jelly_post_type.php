@@ -110,6 +110,20 @@
       'normal'
     );
 
+    // Add gelling meta box
+    add_meta_box(
+      // ID
+      'jelly_gelling',
+      // Title
+      'Gelificante',
+      // Callback
+      'gelling_meta_box',
+      // Post Type
+      'jelly',
+      // Context
+      'side'
+    );
+
   }
 
   // Price meta box callback
@@ -135,6 +149,19 @@
     include_once( 'views/jelly_boxes/price_agar.php' );
 
   }
+
+  // Gelling meta box callback
+  function gelling_meta_box() {
+
+    global $post;
+
+    $nonce = wp_create_nonce( plugin_basename( __FILE__ ) );
+    $gelling = get_post_meta( $post->ID, 'jelly_gelling', true );
+
+    include_once( 'views/jelly_boxes/gelling.php' );
+
+  }
+
   // Save post meta
   function save_meta_boxes( $post_id, $post ) {
 
@@ -153,6 +180,11 @@
 
       // Verify jelly_prices_agar nonce name
       if ( !wp_verify_nonce( $_POST['jelly_prices_agar_nonce'], plugin_basename( __FILE__ ) ) ) {
+        return $post->ID;
+      }
+
+      // Verify jelly_gelling nonce name
+      if ( !wp_verify_nonce( $_POST['jelly_gelling_nonce'], plugin_basename( __FILE__ ) ) ) {
         return $post->ID;
       }
 
@@ -192,6 +224,14 @@
         update_post_meta( $post->ID, 'jelly_prices_agar', $prices );
       } else {
         add_post_meta( $post->ID, 'jelly_prices_agar', $prices );
+      }
+
+      // Gelling
+      $gelling = $_POST['jelly_gelling'];
+      if( get_post_meta( $post->ID, 'jelly_gelling', false ) ) {
+        update_post_meta( $post->ID, 'jelly_gelling', $gelling );
+      } else {
+        add_post_meta( $post->ID, 'jelly_gelling', $gelling );
       }
       
     }
