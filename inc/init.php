@@ -18,6 +18,9 @@
     // Add sidebars
     add_action( 'widgets_init', 'gelatinisima_register_sidebars' );
 
+    // Add support to post thumbnails
+    add_theme_support( 'post-thumbnails' );
+
   }
 
   // Enqueue assets for the frontend
