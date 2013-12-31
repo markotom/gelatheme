@@ -87,9 +87,23 @@
       // ID
       'jelly_prices',
       // Title
-      'Tamaños y precios',
+      'Precios',
       // Callback
       'price_meta_box',
+      // Post Type
+      'jelly',
+      // Context
+      'normal'
+    );
+
+    // Add price meta box
+    add_meta_box(
+      // ID
+      'jelly_prices_agar',
+      // Title
+      'Precios (agar-agar)',
+      // Callback
+      'price_meta_box_agar',
       // Post Type
       'jelly',
       // Context
@@ -104,12 +118,23 @@
     global $post;
 
     $nonce = wp_create_nonce( plugin_basename( __FILE__ ) );
-    $price = get_post_meta( $post->ID, 'jelly_prices' );
+    $prices = get_post_meta( $post->ID, 'jelly_prices', true );
 
     include_once( 'views/jelly_boxes/price.php' );
 
   }
 
+  // Price meta box callback
+  function price_meta_box_agar() {
+
+    global $post;
+
+    $nonce = wp_create_nonce( plugin_basename( __FILE__ ) );
+    $prices = get_post_meta( $post->ID, 'jelly_prices_agar', true );
+
+    include_once( 'views/jelly_boxes/price_agar.php' );
+
+  }
   // Save post meta
   function save_meta_boxes( $post_id, $post ) {
 
@@ -121,22 +146,26 @@
     // Save
     if ( $_POST ) {
 
-      // Verify jelly_price nonce name
+      // Verify jelly_prices nonce name
       if ( !wp_verify_nonce( $_POST['jelly_prices_nonce'], plugin_basename( __FILE__ ) ) ) {
         return $post->ID;
       }
 
-      // Prices
+      // Verify jelly_prices_agar nonce name
+      if ( !wp_verify_nonce( $_POST['jelly_prices_agar_nonce'], plugin_basename( __FILE__ ) ) ) {
+        return $post->ID;
+      }
+
+      // Prices (grenetina)
       $sizes = $_POST['jelly_sizes'];
       $prices = $_POST['jelly_prices'];
-      
-      foreach ($prices as $key => $value) {
-        $price = str_replace( '$', '', $value );
-        if ($price) {
-          $prices[$key] = array( 
-            'size' => $sizes[$key],
-            'price' => money_format( '%i', (double) $price )
-          );
+
+      foreach ( $prices as $type => $prices_childs ) {
+        foreach ( $prices_childs as $key => $value ) {
+          $price = str_replace( '$', '', $value );
+          if ( $price ) {
+            $prices[$type][$key] = money_format( '%i', (double) $price );
+          }
         }
       }
 
@@ -144,6 +173,25 @@
         update_post_meta( $post->ID, 'jelly_prices', $prices );
       } else {
         add_post_meta( $post->ID, 'jelly_prices', $prices );
+      }
+
+      // Prices (agar)
+      $sizes = $_POST['jelly_sizes_2'];
+      $prices = $_POST['jelly_prices_agar'];
+
+      foreach ( $prices as $type => $prices_childs ) {
+        foreach ( $prices_childs as $key => $value ) {
+          $price = str_replace( '$', '', $value );
+          if ( $price ) {
+            $prices[$type][$key] = money_format( '%i', (double) $price );
+          }
+        }
+      }
+
+      if( get_post_meta( $post->ID, 'jelly_prices_agar', false ) ) {
+        update_post_meta( $post->ID, 'jelly_prices_agar', $prices );
+      } else {
+        add_post_meta( $post->ID, 'jelly_prices_agar', $prices );
       }
       
     }
