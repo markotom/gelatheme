@@ -72,7 +72,7 @@
       'public' => true,
       'rewrite' => array(
         'slug' => 'gelatinas',
-        'with_front' => false,
+        'with_front' => true,
         'hierarchical' => true
       )
     ));
