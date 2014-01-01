@@ -21,7 +21,7 @@
         'description'           => __( 'Gelatinas' ),
         'public'                => true,
         'rewrite' => array(
-          'slug' => 'gelatinas',
+          'slug' => 'gelatina',
           'with_front' => false
         ),
         'exclude_from_search'   => false,
