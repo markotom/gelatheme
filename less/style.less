@@ -36,7 +36,7 @@ a {
   min-height: 100%;
   height: auto;
   margin: 0 auto -40px;
-  padding: 0 0 40px 0;
+  padding: 0 0 80px 0;
 
   .brightness {
     z-index: -1;
@@ -91,6 +91,12 @@ a {
 // Buttons Override
 @import "buttons.less";
 
+// Labels Override
+@import "labels.less";
+
+// Pagination Override
+@import "pagination.less";
+
 // carousel
 .carousel {
   margin-bottom: 80px;
@@ -117,6 +123,22 @@ a {
   .carousel-control {
     &.left, &.right {
       background: none;
+    }
+  }
+}
+
+.jelly {
+  margin-bottom: 20px;
+  .carousel {
+    width: 30%;
+    margin: 0 10px 0 0;
+    .carousel-indicators {
+      bottom: -35px;
+    }
+    .carousel-inner {
+      .item {
+        padding: 0;
+      }
     }
   }
 }
