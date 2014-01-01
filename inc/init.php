@@ -18,6 +18,9 @@
     // Add sidebars
     add_action( 'widgets_init', 'gelatinisima_register_sidebars' );
 
+    // Flush rewrite rules for custom post types
+    add_action( 'after_switch_theme', 'gelatinisima_flush_rewrite_rules' );
+
     // Add support to post thumbnails
     add_theme_support( 'post-thumbnails' );
 
@@ -85,6 +88,11 @@
     // WP version
     remove_action( 'wp_head', 'wp_generator' );
 
+  }
+
+  // Hook for flush rewrite rules
+  function gelatinisima_flush_rewrite_rules() {
+    flush_rewrite_rules();
   }
 
 ?>
