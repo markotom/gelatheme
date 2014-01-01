@@ -250,25 +250,6 @@
     return $orderby;
   }
 
-  // Jelly templates
-  function jelly_template( $template ) {
-
-    echo 'dog!';
-    // Show template if is archive of jellies
-    if ( is_tax( 'jellies' ) ) {
-
-      // Override template from theme
-      if( $template_from_theme = locate_template( 'archive-jelly.php' ) ) {
-        $template = $template_from_theme;
-      }
-
-    }
-
-    // Return default template
-    return $template;
-
-  }
-
   // Register Jelly Post Type hook
   add_action( 'init', 'jelly_post_type' );
 
@@ -280,8 +261,5 @@
 
   // Order jellies hook
   add_filter( 'posts_orderby', 'jellies_orderby_title', 10, 2 );
-
-  // Jelly template hook
-  add_filter('template_include', 'jelly_template', 99);
 
 ?>
