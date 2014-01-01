@@ -40,7 +40,7 @@
           'read_private_posts'  => 'read',
           'delete_post'         => 'edit_theme_options'
         ),
-        'taxonomies'            => array( 'jellies_category' ),
+        'taxonomies'            => array( 'jellies' ),
         'has_archive'           => true,
         'hierarchical'          => false,
         'supports' => array( 'title', 'revisions', 'thumbnail' )
@@ -52,7 +52,7 @@
   // Register jelly taxonomies
   function jelly_taxonomies() {
 
-    register_taxonomy('jellies_category', 'jelly', array(
+    register_taxonomy('jellies', 'jelly', array(
       'hierarchical' => true,
       'labels' => array(
         'name' => _x( 'Categories', 'taxonomy general name' ),
