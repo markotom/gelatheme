@@ -191,20 +191,21 @@
       // Prices (grenetina)
       $sizes = $_POST['jelly_sizes'];
       $prices = $_POST['jelly_prices'];
+      $format_prices = array();
 
       foreach ( $prices as $type => $prices_childs ) {
         foreach ( $prices_childs as $key => $value ) {
           $price = str_replace( '$', '', $value );
           if ( $price ) {
-            $prices[$type][$key] = money_format( '%i', (double) $price );
+            $format_prices[$type][$key] = money_format( '%i', (double) $price );
           }
         }
       }
 
       if( get_post_meta( $post->ID, 'jelly_prices', false ) ) {
-        update_post_meta( $post->ID, 'jelly_prices', $prices );
+        update_post_meta( $post->ID, 'jelly_prices', $format_prices );
       } else {
-        add_post_meta( $post->ID, 'jelly_prices', $prices );
+        add_post_meta( $post->ID, 'jelly_prices', $format_prices );
       }
 
       // Prices (agar)
