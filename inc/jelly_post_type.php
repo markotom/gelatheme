@@ -21,7 +21,7 @@
         'description'           => __( 'Gelatinas' ),
         'public'                => true,
         'rewrite' => array(
-          'slug' => 'gelatina',
+          'slug' => 'gelatinas',
           'with_front' => false
         ),
         'exclude_from_search'   => false,
@@ -251,40 +251,44 @@
     return $orderby;
   }
 
-  // Rewrite endpoints
-  function jellies_rewrite_endpoints() {
-    // Add endpoint 'gelatinas' to root 
-    add_rewrite_endpoint( 'gelatinas', EP_ROOT );
-    // Flush rewrite rules
-    flush_rewrite_rules();
-  }
-
-  // Jellies template
-  function jellies_template() {
-    global $wp_query;
-    // Do nothing
-    if ( !isset( $wp_query->query_vars['gelatinas'] ) )
-      return;
-
-    // Include template if exists
-    if( $template = locate_template( 'taxonomy-jellies.php' ) ) {
-      include $template;
-      exit;
-    }
-  }
-
-  // Change query to get jellies instead posts
-  function jelly_pre_get_posts( $query ) {
-
-    // Verifiy if "gelatinas" param exists
-    if ( isset( $query->query_vars['gelatinas'] ) ) {
-      // Verifiy if is a main query (loop)
-      if ( $query->is_main_query() ) {
-        // Change post_type param
-        $query->set( 'post_type', 'jelly' );
+  // Custom taxonomy with same slug as custom post type
+  function taxonomy_slug_rewrite( $wp_rewrite ) {
+    $rules = array();
+    
+    // Get all custom taxonomies
+    $taxonomies = get_taxonomies( array( '_builtin' => false ), 'objects' );
+    // Get all custom post types
+    $post_types = get_post_types( array( 'public' => true, '_builtin' => false ), 'objects' );
+    
+    foreach ( $post_types as $post_type ) {
+      foreach ( $taxonomies as $taxonomy ) {
+        // Go through all post types which this taxonomy is assigned to
+        foreach ( $taxonomy->object_type as $object_type ) {
+             
+          // Check if taxonomy is registered for this custom type
+          if ( $object_type == $post_type->name ) {
+       
+            // Get category objects
+            $terms = get_categories( array(
+              'type' => $post_type->name,
+              'taxonomy' => $taxonomy->name,
+              'hide_empty' => 0
+              )
+            );
+     
+            // Make rules
+            foreach ( $terms as $term ) {
+              $rules[$post_type->rewrite['slug'] . '/' . $term->slug . '/?$'] = 'index.php?' . $term->taxonomy . '=' . $term->slug;
+              $rules[$post_type->rewrite['slug'] . '/' . $term->slug . '/page/?([0-9]{1,})/?$'] = 'index.php?' . $term->taxonomy . '=' . $term->slug . '&paged=$matches[1]';
+            }
+          }
+        }
       }
     }
-
+                
+    // Merge with global rules
+    $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+    print_r($wp_rewrite->rules);
   }
 
   // Register Jelly Post Type
@@ -299,13 +303,7 @@
   // Order jellies
   add_filter( 'posts_orderby', 'jellies_orderby_title', 10, 2 );
 
-  // Add rewrite endpoints
-  add_action( 'init', 'jellies_rewrite_endpoints' );
-
-  // Template redirect
-  add_action( 'template_redirect', 'jellies_template' );
-
-  // Change query to get jellies instead posts
-  add_action( 'pre_get_posts', 'jelly_pre_get_posts' );
+  // Custom taxonomy with same slug as custom post type
+  add_filter('generate_rewrite_rules', 'taxonomy_slug_rewrite');
 
 ?>
