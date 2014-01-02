@@ -43,25 +43,25 @@
           
           // Get gelling
           $gelling = get_post_meta( $id, 'jelly_gelling', true );
-          $gelling = implode(' y ', $gelling);
+          $gelling = $gelling ? implode( ' y ', $gelling ) : '';
 
           // Get prices
           $types = array();
           $prices = get_post_meta( $id, 'jelly_prices', true );
 
-          if ( count( $prices['water'] ) > 0 ) {
+          if ( $prices && count( $prices['water'] ) > 0 ) {
             $types[] = 'Agua';
           }
 
-          if ( count( $prices['milk'] ) > 0 ) {
+          if ( $prices && count( $prices['milk'] ) > 0 ) {
             $types[] = 'Leche';
           }
 
-          if ( count( $prices['mousse'] ) > 0 ) {
+          if ( $prices && count( $prices['mousse'] ) > 0 ) {
             $types[] = 'Mousse';
           }
 
-          if ( count( $prices['wine'] ) > 0 ) {
+          if ( $prices && count( $prices['wine'] ) > 0 ) {
             $types[] = 'Vino';
           }
 
