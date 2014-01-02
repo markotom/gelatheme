@@ -288,7 +288,6 @@
                 
     // Merge with global rules
     $wp_rewrite->rules = $rules + $wp_rewrite->rules;
-    print_r($wp_rewrite->rules);
   }
 
   // Register Jelly Post Type
