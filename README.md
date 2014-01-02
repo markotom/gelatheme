@@ -3,6 +3,12 @@ Wordpress Jelly Theme
 
 ## Changelog
 
+### 1.0.4
+
+* Jelly post type to frontend (categories)
+  * Added templates: archive-jelly.php and taxonomy-jellies.php
+* Fix some issues
+
 ### 1.0.3
 
 * Added new archive template for jelly post type
@@ -28,5 +34,4 @@ Wordpress Jelly Theme
 
 ## Todo
 
-* Jelly post type to front end
 * Option to show the last tweet
