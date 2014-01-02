@@ -72,7 +72,7 @@
       'public' => true,
       'rewrite' => array(
         'slug' => 'gelatinas',
-        'with_front' => true,
+        'with_front' => false,
         'hierarchical' => true
       )
     ));
@@ -243,6 +243,7 @@
   function jellies_orderby_title( $orderby, &$query ) {
     global $wpdb;
 
+    // Change order if post_type is jelly
     if ( get_query_var( 'post_type' ) == 'jelly' ) {
       return $wpdb->posts . '.post_title ASC';
     }
@@ -250,16 +251,61 @@
     return $orderby;
   }
 
-  // Register Jelly Post Type hook
+  // Rewrite endpoints
+  function jellies_rewrite_endpoints() {
+    // Add endpoint 'gelatinas' to root 
+    add_rewrite_endpoint( 'gelatinas', EP_ROOT );
+    // Flush rewrite rules
+    flush_rewrite_rules();
+  }
+
+  // Jellies template
+  function jellies_template() {
+    global $wp_query;
+    // Do nothing
+    if ( !isset( $wp_query->query_vars['gelatinas'] ) )
+      return;
+
+    // Include template if exists
+    if( $template = locate_template( 'taxonomy-jellies.php' ) ) {
+      include $template;
+      exit;
+    }
+  }
+
+  // Change query to get jellies instead posts
+  function jelly_pre_get_posts( $query ) {
+
+    // Verifiy if "gelatinas" param exists
+    if ( isset( $query->query_vars['gelatinas'] ) ) {
+      // Verifiy if is a main query (loop)
+      if ( $query->is_main_query() ) {
+        // Change post_type param
+        $query->set( 'post_type', 'jelly' );
+      }
+    }
+
+  }
+
+  // Register Jelly Post Type
   add_action( 'init', 'jelly_post_type' );
 
-  // Register taxonomies hook
+  // Register taxonomies
   add_action( 'init', 'jelly_taxonomies' );
 
-  // Save meta boxes hook
+  // Save meta boxes
   add_action( 'save_post', 'save_meta_boxes', 1, 2 );
 
-  // Order jellies hook
+  // Order jellies
   add_filter( 'posts_orderby', 'jellies_orderby_title', 10, 2 );
+
+  // Add rewrite endpoints
+  add_action( 'init', 'jellies_rewrite_endpoints' );
+
+  // Template redirect
+  add_action( 'template_redirect', 'jellies_template' );
+
+  // Change query to get jellies instead posts
+  add_action( 'pre_get_posts', 'jelly_pre_get_posts' );
 
 ?>
